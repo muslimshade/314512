@@ -159,7 +159,7 @@
                     console.log(this.cartCount(product.id));
 
 
-
+                    
 
 
                     const newavailableInventory = product.availableInventory;
@@ -169,7 +169,7 @@
 
                     console.log("iM HERE");
 
-                    fetch('https://cst--3145.herokuapp.com/collection/products/' + product._id, {
+                    fetch('https://cst1.herokuapp.com/collection/lessons' + product._id, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -191,7 +191,7 @@
                     product.availableInventory = product.availableInventory + 1;
                     const newavail = product.availableInventory;
                     this.cart.pop(product)
-                    fetch('https://cst--3145.herokuapp.com/collection/products/' + product._id, {
+                    fetch('https://cst1.herokuapp.com/collection/lessons' + product._id, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -211,7 +211,7 @@
 
 
                 submitForm() {
-                    fetch('https://cst--3145.herokuapp.com/collection/orders', {
+                    fetch('https://cst1.herokuapp.com/collection/order', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -223,7 +223,7 @@
 
                     this.cart.forEach(element => {
 
-                        fetch('https://cw2indi.herokuapp.com/collection/lessons/' + element._id, {
+                        fetch('https://cst1.herokuapp.com/collection/lessons' + element._id, {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -268,7 +268,7 @@
 
             created: function () {
 
-                fetch('https://cst--3145.herokuapp.com/collection/products').then(
+                fetch('https://cst1.herokuapp.com/collection/lessons').then(
                     function (response) {
                         response.json().then(
                             function (json) {
