@@ -1,7 +1,7 @@
 {
    "name": "project",
-   "author": "uzair",   
-   "version": "0.2.0",
+   "author": "hasnain",   
+   "version": "0.1",
    "description": "",
    "main": "server.js",
    "scripts": {
