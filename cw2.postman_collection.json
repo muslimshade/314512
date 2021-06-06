@@ -1,0 +1,144 @@
+{
+	"info": {
+		"_postman_id": "2f8931ad-d9cd-432f-b642-12162b6410db",
+		"name": "cw2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "LESSON GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://cst1.herokuapp.com/collection/lessons",
+					"protocol": "https",
+					"host": [
+						"cst1",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"collection",
+						"lessons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ORDER GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://cst1.herokuapp.com/collection/order",
+					"protocol": "https",
+					"host": [
+						"cst1",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"collection",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PRICE CHANGE",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"price\": 20   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://cst1.herokuapp.com/collection/lessons/60bc101a8f021c100d3e060a",
+					"protocol": "https",
+					"host": [
+						"cst1",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"collection",
+						"lessons",
+						"60bc101a8f021c100d3e060a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PRICE CHANGE to 60",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"price\": 20   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://cst1.herokuapp.com/collection/lessons/60bc101a8f021c100d3e060a",
+					"protocol": "https",
+					"host": [
+						"cst1",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"collection",
+						"lessons",
+						"60bc101a8f021c100d3e060a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE PRODUCT",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"price\": 20   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://cst1.herokuapp.com/collection/lessons/60bc101a8f021c100d3e060a",
+					"protocol": "https",
+					"host": [
+						"cst1",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"collection",
+						"lessons",
+						"60bc101a8f021c100d3e060a"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
