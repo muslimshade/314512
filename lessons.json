@@ -1,0 +1,91 @@
+[{
+  "_id": {
+    "$oid": "60bc101a8f021c100d3e0608"
+  },
+  "id": 1,
+  "Subject": "Learn Wordpress",
+  "location": "AL Ain",
+  "price": 20,
+  "image": "51hWLNvvM4L.jpg",
+  "availableInventory": 1
+},{
+  "_id": {
+    "$oid": "60bc101a8f021c100d3e0609"
+  },
+  "id": 2,
+  "Subject": "Computer",
+  "location": "Al Yahar",
+  "price": 2.99,
+  "image": "81StQqHmkhL.jpg",
+  "availableInventory": 5
+},{
+  "_id": {
+    "$oid": "60bc101a8f021c100d3e060b"
+  },
+  "id": 4,
+  "Subject": "Business Intellegence",
+  "location": "A place for your cat to play!",
+  "price": 7.99,
+  "image": "18782625.jpg",
+  "availableInventory": 5
+},{
+  "_id": {
+    "$oid": "60bc101a8f021c100d3e060c"
+  },
+  "id": 5,
+  "Subject": "Web Programming",
+  "location": "Drive your cat crazy with this product.",
+  "price": 49.99,
+  "image": "9788126512904.jpg",
+  "availableInventory": 5
+},{
+  "_id": {
+    "$oid": "60bc101a8f021c100d3e060d"
+  },
+  "id": 6,
+  "Subject": "Database Management System",
+  "location": "A place for your cat to play!",
+  "price": 7.99,
+  "image": "712XlaVQ8OL.jpg",
+  "availableInventory": 5
+},{
+  "_id": {
+    "$oid": "60bc101a8f021c100d3e060e"
+  },
+  "id": 7,
+  "Subject": "Ux Design",
+  "location": "A place for your cat to play!",
+  "price": 7.99,
+  "image": "1_c_sX-2aUWudIPONbuER9TQ.jpeg",
+  "availableInventory": 5
+},{
+  "_id": {
+    "$oid": "60bc101a8f021c100d3e060f"
+  },
+  "id": 8,
+  "Subject": "Learn Wordpress",
+  "location": "A place for your cat to play!",
+  "price": 7.99,
+  "image": "51hWLNvvM4L.jpg",
+  "availableInventory": 5
+},{
+  "_id": {
+    "$oid": "60bc101a8f021c100d3e0610"
+  },
+  "id": 9,
+  "Subject": "PHP Devlopment",
+  "location": "A place for your cat to play!",
+  "price": 7.99,
+  "image": "15701909123y9xhRgIzL.jpg",
+  "availableInventory": 5
+},{
+  "_id": {
+    "$oid": "60bc101a8f021c100d3e0611"
+  },
+  "id": 10,
+  "Subject": "Vue.js",
+  "location": "A place for your cat to play!",
+  "price": 7.99,
+  "image": "418NnKr2KKL.jpg",
+  "availableInventory": 5
+}]
