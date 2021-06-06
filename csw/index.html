@@ -15,7 +15,7 @@
 
         <!-- shoping cart -->
         <header>
-            <h1>{{sitename}}</h1>
+            <h1>CLASS WORK 2 Indiviual</h1>
             
          
             <h1><center>CARTS</center></h1>
@@ -23,7 +23,7 @@
             <div v-for="product in cart" style="display:inline-block;">
               
                 <figure>
-                    <img v-bind:src="product.image" width="200" height="200">
+                    <img v-bind:src="product.image" width="190" height="190">
                 </figure>
             
                 <h2>Subject:{{product.Subject}}</h2>
@@ -96,7 +96,7 @@
         var webstore = new Vue({
             el: "#app",
             data: {
-                sitename: "CLASS WORK 2 Indiviual",
+              
                 products: [],
 
                 lessons: [],
@@ -215,14 +215,14 @@
                             body: JSON.stringify({ availableInventory: element.availableInventory })
                         }).then(function (data) {
                             console.log(data);
-                            console.log("Im Here");
+                            console.log("Updated");
 
                         });
 
                     });
 
 
-                    alert('Confirmed Order!')
+                    alert('YOUR ORDER IS PLACED SUCESSFULLY')
                 },
 
                 cartCount(id) {
