@@ -16,9 +16,12 @@
         <!-- shoping cart -->
         <header>
             <h1>{{sitename}}</h1>
-            <button v-on:click="showcheckout" v-if="enableshoppingcart">shopping cart</button>
-            <P v-else>shopping cart empty</P>
+            
+         
+            <h1><center>CARTS</center></h1>
+           
             <div v-for="product in cart" style="display:inline-block;">
+              
                 <figure>
                     <img v-bind:src="product.image" width="200" height="200">
                 </figure>
@@ -28,6 +31,7 @@
                 <P>Product I.d: {{product.id}}</P>
                 <P>Number of spaces: {{product.availableInventory}}</P>
                 <button v-on:click="removefromcart(product)">removefromcart</button>
+                <button v-on:click="showcheckout" v-if="enableshoppingcart">shopping cart</button>
             </div>
         </header>
 
@@ -35,9 +39,9 @@
             <div v-if="showproduct">
 
 
+                <h1>ALL PRODUCTS</h1>
 
-
-                <div v-for="product in products">
+                <div v-for="product in products" style="display:inline-block;">
 
                     <figure>
                         <img v-bind:src="product.image" width="200" height="200">
