@@ -25,7 +25,8 @@
                 <figure>
                     <img v-bind:src="product.image" width="200" height="200">
                 </figure>
-                <h2 v-html="product.subject"></h2>
+            
+                <h2>Subject:{{product.Subject}}</h2>
                 <P>Location: {{product.location}}</P>
                 <p>Price: {{product.price}}</p>
                 <P>Product I.d: {{product.id}}</P>
@@ -47,7 +48,7 @@
                         <img v-bind:src="product.image" width="200" height="200">
                     </figure>
 
-                    <h2 v-html="product.subject"></h2>
+                    <h2>Subject:{{product.Subject}}</h2>
                     <p>ID : {{ product._id}}</p>
                     <P>Location: {{product.location}}</P>
                     <p>Price: {{product.price}}</p>
@@ -55,7 +56,7 @@
                     <P>Number of spaces: {{product.availableInventory}}</P>
                     <button v-on:click="decrement_inventory(product); addtocart(product); " v-if="isenable(product)">
                         Add to cart</button>
-                    <!-- only show the button when 'canAddToCart' is true when it becomes false the button disappers -->
+                   
 
                     <button disabled="disabled" v-else>DISABLE</button>
                 </div>
@@ -160,7 +161,7 @@
                         body: JSON.stringify({ availableInventory: newavailableInventory })
                     }).then(function (data) {
                         console.log(data);
-                        //              console.log("Im Here");
+                     
 
                     });
 
@@ -182,7 +183,7 @@
                         body: JSON.stringify({ availableInventory: newavail })
                     }).then(function (data) {
                         console.log(data);
-                        //              console.log("Im Here");
+                      
 
                     });
 
@@ -199,7 +200,7 @@
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.cart.map(({ title }) => title) })}).then(function () {
+                        body: JSON.stringify({ Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.cart.map(({ Subject }) => Subject) })}).then(function () {
 
 
                     });
