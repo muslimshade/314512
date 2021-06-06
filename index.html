@@ -42,7 +42,7 @@
             <div v-for="product in cart" style="display:inline-block;">
                 <figure>
                     <img v-bind:src="product.image" width="200" height="200">
-                </figure>
+                </figure>u
                 <h2 v-html="product.subject"></h2>
                 <P>Location: {{product.location}}</P>
                 <p>Price: {{product.price}}</p>
@@ -211,7 +211,7 @@
 
 
                 submitForm() {
-                    fetch('https://cst1.herokuapp.com/collection/order', {
+                    fetch('https://cst1.herokuapp.com/collection/order/', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -223,7 +223,7 @@
 
                     this.cart.forEach(element => {
 
-                        fetch('https://cst1.herokuapp.com/collection/lessons' + element._id, {
+                        fetch('https://cst1.herokuapp.com/collection/lessons/' + element._id, {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -268,7 +268,7 @@
 
             created: function () {
 
-                fetch('https://cst1.herokuapp.com/collection/lessons').then(
+                fetch('https://cst1.herokuapp.com/collection/lessons/').then(
                     function (response) {
                         response.json().then(
                             function (json) {
