@@ -1,4 +1,4 @@
-const CACHE = "ashmarch-v1";
+const CACHE = "ashmarch-v2";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll([
@@ -10,6 +10,7 @@ self.addEventListener("install", (event) => {
     "./js/game.js",
     "./js/data.js",
     "./js/audio.js",
+    "./js/city.js",
     "./manifest.webmanifest",
     "./icons/icon-192.png",
     "./icons/icon-512.png",

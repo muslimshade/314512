@@ -12,6 +12,10 @@ It is an original game with its own rulers, towns, and rewards. It is not affili
 
 The same page also plays in a desktop browser. In Settings you can run the clock at 1×, 3×, or 10×.
 
+## The town
+
+The town is an isometric city. Drag to look around, and use the zoom buttons to frame the walls. Tap a building to raise it. Empty lots are marked with a sign until you can build there. The Town Center still gates the rest of the realm.
+
 ## Season 1 events
 
 - Daily Missions, resetting at midnight in Dubai (UTC+4)

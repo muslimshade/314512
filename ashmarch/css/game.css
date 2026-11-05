@@ -83,7 +83,56 @@ header {
 
 .stage { flex: 1; min-height: 0; position: relative; }
 .view { height: 100%; overflow: auto; padding: 4px 14px 18px; }
+.view.city-mode { padding: 0; overflow: hidden; }
 .view::-webkit-scrollbar { width: 0; }
+
+.city {
+  position: absolute; inset: 0; overflow: hidden; touch-action: none;
+  background: linear-gradient(#9fd4f2 0%, #d9efc4 38%, #6ea84c 38.2%, #5c9440 100%);
+}
+.city-viewport { position: absolute; inset: 0; }
+.city-world {
+  position: absolute; left: 50%; top: 50%; width: 860px; height: 740px;
+  transform-origin: 50% 50%;
+}
+.city svg { width: auto; height: auto; max-width: none; fill: unset; stroke: unset; }
+.city-ground, .city-walls { position: absolute; left: 0; top: 0; width: 860px; height: 740px; pointer-events: none; }
+.plot, .tree, .villager { position: absolute; padding: 0; border: 0; background: transparent; min-height: 0; }
+.plot { color: #24180f; filter: drop-shadow(0 3px 0 rgba(40, 60, 20, 0.22)); pointer-events: none; }
+.plot svg { pointer-events: auto; }
+.plot.locked { filter: grayscale(0.25) brightness(0.96) drop-shadow(0 2px 0 rgba(40, 60, 20, 0.16)); }
+.plot.selected { filter: drop-shadow(0 0 3px #f0c27a) drop-shadow(0 3px 0 rgba(40, 60, 20, 0.22)); }
+.plot-tag {
+  position: absolute; transform: translate(-50%, 0);
+  background: rgba(28, 22, 16, 0.88); color: #f6efe4; border-radius: 7px;
+  padding: 1px 5px 2px; text-align: center; pointer-events: none; white-space: nowrap;
+  border: 1px solid rgba(240, 194, 122, 0.28); line-height: 1.15;
+}
+.plot-tag b { font-size: 9px; font-weight: 700; }
+.plot-tag small { color: #f0c27a; font-size: 9px; }
+.plot.deco { pointer-events: none; }
+.tree { pointer-events: none; margin-left: -23px; margin-top: -40px; }
+.villager { width: 8px; height: 12px; margin-left: -4px; pointer-events: none; }
+.villager i {
+  display: block; width: 8px; height: 8px; border-radius: 50% 50% 40% 40%;
+  background: #e7d3b0; box-shadow: 0 6px 0 #3d6ea8;
+}
+.villager i.blue { background: #f0c27a; box-shadow: 0 6px 0 #8d3d32; }
+.city-hud {
+  position: absolute; top: 8px; left: 8px; right: 64px; z-index: 6;
+  display: flex; flex-direction: column; gap: 6px; align-items: flex-start; pointer-events: none;
+}
+.city-hud .chapter, .city-hud .pill { pointer-events: auto; width: auto; max-width: 280px; }
+.city-hud .chapter { padding: 8px 10px; }
+.city-hud .chapter strong { font-size: 13px; }
+.city-zoom {
+  position: absolute; right: 8px; bottom: 10px; z-index: 3;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.city-zoom button {
+  width: 40px; height: 40px; border-radius: 12px; border: 1px solid rgba(255,255,255,.35);
+  background: rgba(24, 18, 12, 0.78); color: #f6efe4; font-size: 20px; line-height: 1;
+}
 
 .kicker { color: var(--gold); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 4px; }
 .fine, .hint { color: var(--dim); font-size: 13px; }

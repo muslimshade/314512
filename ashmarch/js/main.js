@@ -56,7 +56,7 @@ let lastSave = 0;
 let toastSeq = 1;
 
 function blankUi() {
-  return { tab: "town", host: "heroes", sheet: null, event: null, modal: null, toasts: [], depth: 0, canInstall: false, dirty: false, pendingAway: null };
+  return { tab: "town", host: "heroes", sheet: null, event: null, modal: null, toasts: [], depth: 0, canInstall: false, dirty: false, pendingAway: null, cam: { x: 36, y: 48, scale: 1.62 }, suppressClick: false };
 }
 
 function save() {
@@ -175,12 +175,27 @@ function fixLock(eventId) {
 }
 
 function onClick(event) {
+  if (ui.suppressClick) {
+    ui.suppressClick = false;
+    return;
+  }
   const button = event.target.closest("[data-act]");
   if (!button || !app.contains(button)) return;
   const { act: name, id, tab, host, kind, count, formation, queue, min, tree, index, lane, res, speed, event: eventId } = button.dataset;
   if (name === "noop") return;
   if (name !== "start") event.preventDefault();
 
+  if (name === "zoom") {
+    if (!ui.cam) ui.cam = { x: 36, y: 48, scale: 1.62 };
+    if (button.dataset.dir === "home") {
+      ui.cam.x = 36;
+      ui.cam.y = 48;
+      ui.cam.scale = 1.62;
+    } else if (button.dataset.dir === "in") ui.cam.scale = Math.min(1.7, ui.cam.scale * 1.12);
+    else ui.cam.scale = Math.max(0.62, ui.cam.scale * 0.9);
+    full();
+    return;
+  }
   if (name === "nav") {
     ui.tab = tab;
     ui.event = null;
@@ -369,6 +384,62 @@ function onInput(event) {
   save();
 }
 
+function bindCityPan() {
+  const pointers = new Map();
+  let drag = null;
+  let pinch = null;
+  const apply = () => {
+    const world = document.querySelector(".city-world");
+    if (!world || !ui.cam) return;
+    world.style.transform = `translate(calc(-50% + ${ui.cam.x}px), calc(-50% + ${ui.cam.y}px)) scale(${ui.cam.scale})`;
+  };
+  app.addEventListener("pointerdown", (event) => {
+    if (!event.target.closest(".city-viewport")) return;
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (pointers.size === 1) {
+      drag = { x: event.clientX, y: event.clientY, ox: ui.cam.x, oy: ui.cam.y, moved: false };
+      pinch = null;
+    } else if (pointers.size === 2) {
+      const [a, b] = [...pointers.values()];
+      pinch = { dist: Math.hypot(a.x - b.x, a.y - b.y) || 1, scale: ui.cam.scale };
+      drag = null;
+    }
+  });
+  app.addEventListener("pointermove", (event) => {
+    if (!pointers.has(event.pointerId)) return;
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (pinch && pointers.size >= 2) {
+      const [a, b] = [...pointers.values()];
+      const dist = Math.hypot(a.x - b.x, a.y - b.y) || 1;
+      ui.cam.scale = Math.min(1.7, Math.max(0.62, pinch.scale * (dist / pinch.dist)));
+      apply();
+      return;
+    }
+    if (!drag) return;
+    const dx = event.clientX - drag.x;
+    const dy = event.clientY - drag.y;
+    if (Math.hypot(dx, dy) > 8) drag.moved = true;
+    if (!drag.moved) return;
+    ui.cam.x = drag.ox + dx;
+    ui.cam.y = drag.oy + dy;
+    apply();
+  });
+  const end = (event) => {
+    if (drag?.moved) ui.suppressClick = true;
+    drag = null;
+    pointers.delete(event.pointerId);
+    if (pointers.size < 2) pinch = null;
+  };
+  app.addEventListener("pointerup", end);
+  app.addEventListener("pointercancel", end);
+  app.addEventListener("wheel", (event) => {
+    if (!event.target.closest(".city-viewport")) return;
+    event.preventDefault();
+    ui.cam.scale = Math.min(1.7, Math.max(0.62, ui.cam.scale * (event.deltaY > 0 ? 0.92 : 1.08)));
+    apply();
+  }, { passive: false });
+}
+
 function frame() {
   requestAnimationFrame(frame);
   if (!state) return;
@@ -402,6 +473,7 @@ function boot() {
   app.addEventListener("click", onClick);
   app.addEventListener("submit", onSubmit);
   app.addEventListener("input", onInput);
+  bindCityPan();
   window.addEventListener("popstate", () => {
     ui.depth = Math.max(0, ui.depth - 1);
     ui.sheet = null;

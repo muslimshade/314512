@@ -37,8 +37,8 @@ import {
   taskBlocked,
   trainCost,
 } from "./game.js";
+import { renderCity } from "./city.js";
 
-const GROUPS = ["Economy", "Military", "Kingdom"];
 const ROLE = { shield: "Infantry", rider: "Cavalry", marksman: "Archers" };
 
 export function esc(value) {
@@ -123,9 +123,10 @@ export function render(app, ctx) {
   const stage = app.querySelector("#stage");
   const previous = stage.querySelector(".view");
   const scroll = previous ? previous.scrollTop : 0;
-  stage.innerHTML = `<div class="view">${screen(state, ui, now)}</div>${overlay(state, ui, now)}`;
+  const city = ui.tab === "town" && !ui.event;
+  stage.innerHTML = `<div class="view${city ? " city-mode" : ""}">${screen(state, ui, now)}</div>${overlay(state, ui, now)}`;
   const view = stage.querySelector(".view");
-  if (view) view.scrollTop = scroll;
+  if (view && !city) view.scrollTop = scroll;
   app.querySelector("#nav").innerHTML = navigation(ui);
   app.querySelector("#modals").innerHTML = modalMarkup(state, ui);
 }
@@ -249,22 +250,13 @@ function screen(state, ui, now) {
   if (ui.tab === "host") return hostScreen(state, ui, now);
   if (ui.tab === "events") return eventsScreen(state, now);
   if (ui.tab === "alliance") return allianceScreen(state);
-  return townScreen(state, now);
+  return townScreen(state, ui, now);
 }
 
-function townScreen(state, now) {
+function townScreen(state, ui, now) {
   const chapter = chapterView(state);
-  const banners = liveBanners(state, now);
-  const sky = skyline(state.buildings.keep.level);
-  const groups = GROUPS.map((group) => {
-    const rows = Object.entries(BUILDINGS).filter(([, def]) => def.group === group).map(([id]) => buildingRow(state, id, now)).join("");
-    return `<h2>${group}</h2><div class="stack">${rows}</div>`;
-  }).join("");
-  return `<section class="town">${sky}
-    ${chapter ? chapterCard(chapter) : `<p class="fine">Opening chapters complete. The season calendar is yours.</p>`}
-    ${banners}
-    ${groups}
-  </section>`;
+  const card = chapter ? chapterCard(chapter) : "";
+  return renderCity(state, ui, now, card);
 }
 
 function chapterCard(chapter) {
@@ -272,49 +264,6 @@ function chapterCard(chapter) {
     <span class="kicker">Chapter ${chapter.title}</span>
     <strong>${esc(chapter.hint)}</strong>
     <small>${chapter.current}/${chapter.goal}${chapter.ready ? " · Tap to claim" : ""}</small>
-  </button>`;
-}
-
-function liveBanners(state, now) {
-  const items = [];
-  if (state.bear.endsAt > now) items.push(["bear", "Bear Hunt is live"]);
-  if (state.castle.active) items.push(["castle", "Castle Battle is live"]);
-  if (state.kop.phase === "prep" || state.kop.phase === "battle" || state.kop.phase === "triage") {
-    items.push(["kop", `Kingdom of Power · ${state.kop.phase}`]);
-  }
-  if (!items.length) return "";
-  return `<div class="stack">${items.map(([id, label]) => `<button class="pill" data-act="event-open" data-event="${id}">${esc(label)}</button>`).join("")}</div>`;
-}
-
-function skyline(level) {
-  const towers = Math.min(7, level + 2);
-  const blocks = Array.from({ length: towers }, (_, i) => {
-    const h = 28 + ((i * 17 + level * 5) % 36);
-    const x = 18 + i * 34;
-    return `<rect x="${x}" y="${78 - h}" width="22" height="${h}" rx="2"/>`;
-  }).join("");
-  return `<div class="sky" aria-hidden="true"><svg viewBox="0 0 320 92"><rect class="ground" x="0" y="74" width="320" height="18"/>${blocks}<path class="flag" d="M168 18v34M168 18h28l-8 8 8 8h-28"/></svg><div><span class="kicker">Town Center</span><strong>Level ${level}</strong></div></div>`;
-}
-
-function buildingRow(state, id, now) {
-  const def = BUILDINGS[id];
-  const level = state.buildings[id].level;
-  const gate = buildingGate(state, id);
-  const active = state.build?.id === id;
-  const rate = def.produces && level > 0 ? `${fmtNum(productionPerMin(state, id))}/min` : "";
-  let sub = `Lv ${level}`;
-  if (!gate.ok && level === 0) sub = gate.reason.replace(/\.$/, "");
-  else if (active) sub = `<span data-k="build-time">${fmtTime(state.build.endsAt - now)}</span>`;
-  else if (rate) sub = `Lv ${level} · ${rate}`;
-  else if (id === "barracks" || id === "range" || id === "stables") {
-    const troop = Object.values(TROOPS).find((entry) => entry.building === id);
-    const key = Object.keys(TROOPS).find((name) => TROOPS[name] === troop);
-    sub = level > 0 ? `Lv ${level} · ${fmtNum(state.troops[key])} ${troop.name}` : sub;
-  }
-  return `<button class="brow" data-act="open-building" data-id="${id}">
-    <span class="bico ${def.group === "Military" ? "mil" : def.group === "Kingdom" ? "king" : "eco"}">${icon(def.produces || "town")}</span>
-    <span class="bmeta"><strong>${def.name}</strong><small>${sub}</small></span>
-    <span class="chev">${level >= def.max ? "Max" : level === 0 ? "Build" : "Up"}</span>
   </button>`;
 }
 
@@ -720,7 +669,7 @@ function modalMarkup(state, ui) {
 
 function tutorialModal(step) {
   const slides = [
-    ["This town is yours", "Farms, mills, quarries, and mines fill your stores. Raise the Town Center to open the rest of the realm."],
+    ["This city is yours", "Drag the base to look around. Tap a building to raise it. The Town Center still gates the rest of the realm."],
     ["Train, then march", "Infantry come from the Barracks. On the world map, gather resources and break rebel camps."],
     ["The season is the game", "Daily Missions and Strongest Governor are open now. Bear Hunt, Golden Glaives, Rebel Invasion, Kingdom of Power, and Castle Battle unlock as the town grows."],
   ];
